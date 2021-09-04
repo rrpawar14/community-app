@@ -11,6 +11,8 @@
             scope.translate = translate;
             scope.showFrequencyOptions = false;
             scope.showPenalty = true ;
+            scope.showfreewithdrawalfrequency = false;
+            scope.showrestartfrequency = false;
 
             resourceFactory.chargeTemplateResource.get(function (data) {
                 scope.template = data;
@@ -68,6 +70,7 @@
                         if (chargeTimeType === scope.chargeTimeTypeOptions[i].id) {
                             if (scope.chargeTimeTypeOptions[i].value == "Annual Fee" || scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
                                 scope.showdatefield = true;
+                                scope.showenablefreewithdrawal = false;
                                 scope.repeatsEveryLabel = 'label.input.months';
                                 //to show 'repeats every' field for monthly fee
                                 if (scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
@@ -79,16 +82,29 @@
                                 scope.repeatEvery = true;
                                 scope.showdatefield = false;
                                 scope.repeatsEveryLabel = 'label.input.weeks';
+                                scope.showenablefreewithdrawal = false;
+                            }
+                            else if (scope.chargeTimeTypeOptions[i].value == "Withdrawal Fee") {
+                                scope.showenablefreewithdrawal = true;
+                            }
+                            else{
+                                scope.showenablefreewithdrawal = false;
+                            }
                             }
                             else {
                                 scope.showdatefield = false;
                                 scope.repeatEvery = false;
+                             //   scope.showenablefreewithdrawal = false;
                             }
 
                         }
                     }
-                }
+
             }
+
+            resourceFactory.loanProductResource.get({resourceType: 'template'}, function (data) {
+                scope.product = data;
+            })
 
             scope.setChoice = function () {
                 if (this.formData.active) {
@@ -96,6 +112,17 @@
                 }
                 else if (!this.formData.active) {
                     scope.choice = 0;
+                }
+            };
+
+            scope.setOptions = function() {
+                if (this.formData.enableFreeWithdrawalCharge) {
+                    scope.showfreewithdrawalfrequency = true;
+                    scope.showrestartfrequency = true;
+
+                } else if (!this.formData.enablefreewithdrawal) {
+                    scope.showfreewithdrawalfrequency = false;
+                    scope.showrestartfrequency = false;
                 }
             };
 
@@ -133,6 +160,7 @@
                     delete this.formData.chargePaymentMode;
                 }
                 this.formData.active = this.formData.active || false;
+                this.formData.enableFreeWithdrawalCharge = this.formData.enableFreeWithdrawalCharge || false;
                 this.formData.locale = scope.optlang.code;
                 this.formData.monthDayFormat = 'dd MMM';
                 resourceFactory.chargeResource.save(this.formData, function (data) {
