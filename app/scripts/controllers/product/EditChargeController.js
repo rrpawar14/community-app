@@ -16,16 +16,18 @@
 
                 if (data.chargeAppliesTo.value === "Loan") {
                     scope.chargeTimeTypeOptions = data.loanChargeTimeTypeOptions;
-                    scope.template.chargeCalculationTypeOptions = scope.template.loanChargeCalculationTypeOptions;
+                    scope.template.chargeCalculationTypeOptions = scope.paymentTypes.loanChargeCalculationTypeOptions;
                     scope.flag = false;
                     scope.showFrequencyOptions = true;
                 } else if (data.chargeAppliesTo.value === "Savings") {
                     scope.chargeTimeTypeOptions = data.savingsChargeTimeTypeOptions;
                     scope.template.chargeCalculationTypeOptions = scope.template.savingsChargeCalculationTypeOptions;
+                    scope.paymentTypeOptions = data.paymentTypeOptions;
                     scope.flag = true;
                     scope.showFrequencyOptions = false;
                     if(data.freeWithdrawal === true) {
                         scope.showenablefreewithdrawal = true;
+                        scope.showpaymenttype = true;
                         scope.showfreewithdrawalfrequency = true;
                         scope.showrestartfrequency = true;
                         scope.enableFreeWithdrawalCharge = true;
@@ -33,6 +35,7 @@
                     }
                     else{
                         scope.showenablefreewithdrawal = true;
+                        scope.showpaymenttype = true;
                     }
 
                 } else if(data.chargeAppliesTo.value === 'Shares') {
@@ -74,6 +77,7 @@
                     chargeAppliesTo: data.chargeAppliesTo.id,
                     chargeTimeType: data.chargeTimeType.id,
                     chargeCalculationType: data.chargeCalculationType.id,
+                    paymentTypeId: data.paymentTypeOptions.id,
                     amount: data.amount
                 };
 
@@ -164,6 +168,7 @@
 
             resourceFactory.loanProductResource.get({resourceType: 'template'}, function (data) {
                 scope.product = data;
+                scope.paymentTypeOptions = data.paymentTypeOptions;
             })
 
             scope.setOptions = function() {
@@ -192,7 +197,6 @@
                 this.formData.active = this.formData.active || false;
                 this.formData.enableFreeWithdrawalCharge = this.formData.enableFreeWithdrawalCharge || false;
                 this.formData.penalty = this.formData.penalty || false;
-              //  this.formData.enableFreeWithdrawalCharge = this.formData.enableFreeWithdrawalCharge || false;
                 resourceFactory.chargeResource.update({chargeId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewcharge/' + data.resourceId);
                 });

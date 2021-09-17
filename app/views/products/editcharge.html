@@ -63,16 +63,6 @@
                 </div>
             </div>
 
-            <!--<div class="form-group" ng-show="showenablefreewithdrawal">
-                <label class="control-label col-sm-2">{{'label.input.enablefreewithdrawal' | translate}}</label>
-
-                <div class="col-sm-3">
-                    <label class="checkbox">
-                        <input id="enablefreewithdrawal" type="checkbox" ng-model="formData.enableFreeWithdrawalCharge" data-ng-change="setOptions()">
-                    </label>
-                </div>
-            </div> -->
-
             <div class="form-group" ng-show="showenablefreewithdrawal">
                 <label class="control-label col-sm-2" for="enablefreewithdrawal">{{'label.input.enablefreewithdrawal' | translate}}</label>
 
@@ -82,6 +72,17 @@
                     </label>
                 </div>
             </div>
+            <div class="form-group" ng-show="showpaymenttype">
+                <label class="control-label col-sm-2">{{ 'label.input.paymenttype' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <select id="paymentTypeOptions" class="form-control"
+                            data-ng-options="paymentType.id as paymentType.name for paymentType in paymentTypeOptions"
+                            ng-model="formData.paymentTypeId" value="{{paymentType.id}}">
+                      </select>
+                </div>
+            </div>
+
 
             <div class="form-group" ng-show="showfreewithdrawalfrequency">
                 <label class="control-label col-sm-2">{{'label.input.freewithdrawalfrequency' | translate}}<span
@@ -101,13 +102,6 @@
                 </div>
 
                 <div class="form-group">
-                    <!-- <div class="col-sm-2">
-                        <select id="repaymentFrequencyType" class="form-control"
-                                ng-model="formData.countFrequencyType"
-                                ng-options="repaymentFrequencyType.id as repaymentFrequencyType.value for repaymentFrequencyType in product.repaymentFrequencyTypeOptions"
-                                ng-change = "loanproduct.repaymentFrequencyOption.value = formValue(product.repaymentFrequencyTypeOptions,formData.repaymentFrequencyType)"
-                                value="{{repaymentFrequencyType.id}}"></select>
-                    </div> -->
 
                     <div class="col-sm-2">
                         <select id="countFrequencyType" ng-model="formData.countFrequencyType"
@@ -116,14 +110,6 @@
                         </select>
                     </div>
 
-                    <!--
-                   <div class="col-sm-3">
-                    <select id="chargeCalculationType" ng-model="formData.chargeCalculationType"
-                            data-ng-options="chargecalculation.id as chargecalculation.value for chargecalculation in template.chargeCalculationTypeOptions | filter:filterChargeCalculations(formData.chargeTimeType)"
-                            value="{{chargecalculation.id}}" class="form-control">
-                    </select>
-                </div>
-                    -->
 
                     <div class="col-sm-2">
                         <form-validate valattributeform="Terms" valattribute="repaymentEvery"/>

@@ -13,6 +13,7 @@
             scope.showPenalty = true ;
             scope.showfreewithdrawalfrequency = false;
             scope.showrestartfrequency = false;
+            scope.paymentTypes = [];
 
             resourceFactory.chargeTemplateResource.get(function (data) {
                 scope.template = data;
@@ -71,6 +72,7 @@
                             if (scope.chargeTimeTypeOptions[i].value == "Annual Fee" || scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
                                 scope.showdatefield = true;
                                 scope.showenablefreewithdrawal = false;
+                                scope.showpaymenttype = false;
                                 scope.repeatsEveryLabel = 'label.input.months';
                                 //to show 'repeats every' field for monthly fee
                                 if (scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
@@ -83,24 +85,30 @@
                                 scope.showdatefield = false;
                                 scope.repeatsEveryLabel = 'label.input.weeks';
                                 scope.showenablefreewithdrawal = false;
+                                scope.showpaymenttype = false;
                             }
                             else if (scope.chargeTimeTypeOptions[i].value == "Withdrawal Fee") {
                                 scope.showenablefreewithdrawal = true;
+                                scope.showpaymenttype = true;
                             }
                             else{
                                 scope.showenablefreewithdrawal = false;
+                                scope.showpaymenttype = false;
                             }
                             }
                             else {
                                 scope.showdatefield = false;
                                 scope.repeatEvery = false;
-                             //   scope.showenablefreewithdrawal = false;
                             }
 
                         }
                     }
 
             }
+
+            resourceFactory.paymentTypeResource.getAll( function (data) {
+                scope.paymentTypes = data;
+            });
 
             resourceFactory.loanProductResource.get({resourceType: 'template'}, function (data) {
                 scope.product = data;
