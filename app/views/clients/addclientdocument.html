@@ -10,12 +10,17 @@
     <fieldset>
         <legend>{{'label.heading.uploadclientdocument' | translate}}</legend>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="name">{{'label.input.name' | translate}}<span
-                class="required">*</span></label>
+
+                    <label class="control-label col-sm-2" for="name">{{'label.input.name' | translate}}<span
+                            class="required">*</span></label>
 
                 <div class="col-sm-3">
-                    <input ng-autofocus="true" type="text" id="name" name="name" ng-model="formData.name" class="form-control" required
-                    late-Validate/>
+                    <select id="name" ng-model="formData.name"
+                            ng-options="documenttype.id as documenttype.name for documenttype in documenttypes"
+                            value="{{documenttype.name}}" required="required"
+                            class="form-control">
+                        <option style="display:none" value="">{{'label.menu.selectone' | translate}}
+                    </select>
                 </div>
                 <div class="col-sm-3">
                     <form-validate valattributeform="clientdocumentform" valattribute="name"/>

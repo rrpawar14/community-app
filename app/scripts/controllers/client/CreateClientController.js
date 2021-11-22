@@ -18,6 +18,7 @@
             scope.forceOffice = null;
             scope.showNonPersonOptions = false;
             scope.clientPersonId = 1;
+            scope.documenttypes = [];
             //address
             scope.addressTypes=[];
             scope.countryOptions=[];
@@ -132,6 +133,11 @@
 
 
 
+            });
+
+            resourceFactory.clientDocumentTemplateResource.get({clientId: routeParams.clientId}, function (data) {
+                scope.documenttypes = data.allowedDocumentTypes;
+                scope.formData.documentTypeId = data.allowedDocumentTypes[0].id;
             });
 
             scope.updateColumnHeaders = function(columnHeaderData) {
@@ -435,6 +441,7 @@
                     temp.dateFormat = scope.df;
                     scope.formData.familyMembers.push(temp);
                 }
+
 
                 //
 
