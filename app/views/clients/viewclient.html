@@ -1120,6 +1120,7 @@
 							<th>{{'label.heading.id' | translate}}</th>
 							<th>{{'label.heading.description' | translate}}</th>
 							<th>{{'label.heading.type' | translate}}</th>
+							<th>{{'label.heading.value' | translate}}</th>
 							<th>{{'label.heading.identitydocuments' | translate}}</th>
 							<th>{{'label.heading.status' | translate}}</th>
 							<th>{{'label.heading.actions' | translate}}</th>
@@ -1130,6 +1131,7 @@
 							<td>{{document.documentKey}}</td>
 							<td>{{document.description}}</td>
 							<td>{{document.documentType.name}}</td>
+							<td>{{document.documentIssueCountry}}</td>
 							<td>
 		                  <span ng-repeat="file in document.documents">
 		                    {{file.fileName}}&nbsp;&nbsp;

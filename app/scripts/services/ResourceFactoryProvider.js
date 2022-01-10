@@ -88,6 +88,8 @@
                     }),
                     clientDocumentTemplateResource: defineResource(apiVer + "/clients/:clientId/documentsuploaded", {clientId: '@clientId'}, {
                         get: {method: 'GET', params: {}}
+                    clientIdenfierPassportCountriesResource: defineResource(apiVer + "/codes/countries", {}, {
+                        get: {method: 'GET', params: {}, isArray: true},
                     }),
                     surveyResource: defineResource(apiVer + "/surveys/:surveyId", {surveyId: '@surveyId'}, {
                         getAll: {method: 'GET', params: {}, isArray: true},

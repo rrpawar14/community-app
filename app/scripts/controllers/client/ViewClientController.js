@@ -19,6 +19,7 @@
             scope.legalform = 'm_client';
 
 
+
             // address
             scope.addresses=[];
             scope.view={};
