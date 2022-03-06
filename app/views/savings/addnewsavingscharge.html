@@ -62,6 +62,23 @@
                                    ng-model="date.specificduedate" is-open="opened" class="form-control"/>
                         </div>
                     </div>
+                    <div class="form-group" ng-show="!showGracePeriodEnabled">
+                        <label class="col-sm-2">{{'label.input.gracePeriodEnabled' | translate}} </label>
+                        <div class="col-sm-3">
+                            <label class="checkbox">
+                                <input id="gracePeriodEnabled" type="checkbox" ng-model="formData.isGraceEnabled" data-ng-change="setGracePeriodOptions()">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="showGracePeriod">
+                        <label class="control-label col-sm-2">{{ 'label.input.gracePeriod' | translate }}<span
+                                class="required">*</span></label>
+
+                        <div class="col-sm-3">
+                            <input id="chargeGracePeriod" type="text" name="gracePeriod" ng-model="formData.gracePeriod" class="form-control" ng-late-Validate/>
+                            <form-validate valattributeform="savingccountchargeform" valattribute="amount"/>
+                        </div>
+                    </div>
                     <div class="form-group" ng-show="!dueDateNotRequired && chargeTimeTypeAnnualOrMonth">
                         <label class="control-label col-sm-2">{{ 'label.input.dueon' | translate }}<span
                                 class="required">*</span></label>

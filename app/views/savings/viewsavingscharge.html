@@ -55,6 +55,18 @@
                     <td>{{charge.chargeTimeType.value}}</td>
                 </tr>
                 <tr>
+                    <td>{{'label.heading.isGracePeriodEnabled' | translate}}</td>
+                    <td>{{charge.isGracePeriodEnabled}}</td>
+                </tr>
+                <tr>
+                    <td>{{'label.heading.extendgraceperiod' | translate}}</td>
+                    <td>{{charge.chargeGracePeriod}}</td>
+                </tr>
+                <tr>
+                    <td>{{'label.heading.beforegraceperiod' | translate}}</td>
+                    <td>{{charge.dateBeforeGrace | DateFormat}}</td>
+                </tr>
+                <tr>
                     <td>{{'label.heading.paymentdueasof' | translate}}</td>
                     <td>{{charge.dueDate | DateFormat}}</td>
                 </tr>

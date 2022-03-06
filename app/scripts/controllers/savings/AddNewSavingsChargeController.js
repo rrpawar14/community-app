@@ -4,6 +4,8 @@
             scope.offices = [];
             scope.cancelRoute = routeParams.id;
             scope.date = {};
+           // scope.showGracePeriodEnabled = true;
+            scope.showGracePeriod = false;
 
             resourceFactory.savingsChargeResource.get({accountId: routeParams.id, resourceType: 'template'}, function (data) {
                 scope.chargeOptions = data.chargeOptions;
@@ -18,6 +20,7 @@
                     if(data.chargeTimeType.value === "Withdrawal Fee"
                         || data.chargeTimeType.value === "Saving No Activity Fee"){
                         scope.dueDateNotRequired = true;
+                        scope.showGracePeriodEnabled = true;
                     }
                     scope.formData.feeInterval = data.feeInterval;
                     if (data.chargeTimeType.value === "Annual Fee" || data.chargeTimeType.value === "Monthly Fee") {
@@ -26,6 +29,14 @@
                 });
             };
 
+            scope.setGracePeriodOptions = function() {
+                if (this.formData.isGraceEnabled) {
+                    scope.showGracePeriod = true;
+                }
+                else {
+                    scope.showGracePeriod = false;
+                }
+            }
             scope.submit = function () {
                 this.formData.locale = scope.optlang.code;
                 if (scope.dueDateNotRequired !== true) {
