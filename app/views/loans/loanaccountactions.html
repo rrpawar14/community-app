@@ -259,6 +259,24 @@
                 <div class="col-sm-3">
                     <textarea id="note" rows="2" class="form-control" ng-model="formData.note"></textarea>
                 </div>
+
+            </div>
+            <div class="form-group" ng-show="showMomo">
+                <legend>{{ momotitle | translate}}</legend>
+            </div>
+            <div class="form-group" ng-show="showMomo">
+                <label class="control-label col-sm-2" for="payeeNote">{{ 'label.input.payeeNote' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <textarea id="payeeNote" rows="2" class="form-control" ng-model="momoData.payeeNote"></textarea>
+                </div>
+            </div>
+            <div class="form-group" ng-show="showMomo">
+                <label class="control-label col-sm-2" for="payerNote">{{ 'label.input.payerNote' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <textarea id="payerNote" rows="2" class="form-control" ng-model="momoData.payerNote"></textarea>
+                </div>
             </div>
             <div class="form-group" ng-show="installmentchargeField">
                 <label class="control-label col-sm-2" for="note">{{ 'label.input.installment' | translate}}</label>
@@ -402,7 +420,7 @@
                         </button>
                         <button id="save" type="submit" has-permission='{{taskPermissionName}}' wz-next class="btn btn-primary">{{
                             'label.button.save' | translate}}
-                        </button>
+                        </button> <!---->
                     </div>
                 </div>
             </div>

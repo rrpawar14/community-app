@@ -1,13 +1,16 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        LoanAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter) {
+        LoanAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter, $http) {
 
             scope.action = routeParams.action || "";
             scope.accountId = routeParams.id;
             scope.formData = {};
+            scope.momoData = {};
             scope.entityformData = {datatables:{}};
             scope.showDateField = true;
             scope.showNoteField = true;
+            scope.showMomo = false;
+            scope.clientMobileNo = '';
             scope.showAmountField = false;
             scope.restrictDate = new Date();
             // Transaction UI Related
@@ -71,6 +74,10 @@
                     resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id}, function (data) {
                         scope.productId = data.loanProductId;
                         rootScope.RequestEntities(entity,status,scope.productId);
+                        resourceFactory.clientResource.get({clientId: data.clientId}, function (data) {
+                            scope.clientMobileNo = data.mobileNo;
+                        });
+
                     });
                 }
                 else{
@@ -178,6 +185,30 @@
                         }
                     });
                     scope.title = 'label.heading.disburseloanaccount';
+                    scope.labelName = 'label.input.disbursedondate';
+                    scope.isTransaction = true;
+                    scope.showAmountField = true;
+                    scope.taskPermissionName = 'DISBURSE_LOAN';
+                    scope.fetchEntities('m_loan','DISBURSE');
+                    break;
+                case "disbursetomomo":
+                    scope.modelName = 'actualDisbursementDate';
+                    resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'disburse'}, function (data) {
+                        scope.paymentTypes = data.paymentTypeOptions;
+                        if (data.paymentTypeOptions.length > 0) {
+                            scope.formData.paymentTypeId = data.paymentTypeOptions[0].id;
+                        }
+                        scope.formData.transactionAmount = data.amount;
+                        scope.formData[scope.modelName] = new Date();
+                        if (data.fixedEmiAmount) {
+                            scope.formData.fixedEmiAmount = data.fixedEmiAmount;
+                            scope.showEMIAmountField = true;
+                        }
+                    });
+                    scope.showNoteField = true;
+                    scope.title = 'label.heading.disburseloantomomo';
+                    scope.momotitle = 'label.heading.momodetails';
+                    scope.showMomo = true;
                     scope.labelName = 'label.input.disbursedondate';
                     scope.isTransaction = true;
                     scope.showAmountField = true;
@@ -483,14 +514,35 @@
                 scope.disbursementDetails.push({
                 });
             };
+            scope.amount = scope.formData.transactionAmount;
 
             scope.submit = function () {
+                if(scope.action=='disbursetomomo'){
+                    scope.action='disburse';
+
+                    resourceFactory.clientResource.get({clientId: scope.clientId}, function (data) {
+                        scope.clientMobileNo = data.mobileNo;
+                    });
+
+                    var body = '{"amount": '+scope.formData.transactionAmount+',"currency": "EUR","externalId": "123123","msisdn": "'+scope.clientMobileNo+'","payeeNote": "'+scope.momoData.payeeNote+'","payerNote": "'+scope.momoData.payerNote+'"}';
+
+
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:9191/smsbridges/momoDeposit/',
+                        data: body,
+                        header:'Content-Type:application/json'
+                    }).then(function (data) {
+                      //  scope.template = $sce.trustAsHtml(data.data);
+                    });
+                }
                 scope.processDate = false;
                 var params = {command: scope.action};
                 if(scope.action == "recoverguarantee"){
                     params.command = "recoverGuarantees";
                 }
                 if(scope.action == "approve"){
+                    console.log("loanaccount approve");
                     this.formData.expectedDisbursementDate = dateFilter(scope.form.expectedDisbursementDate, scope.df);
                     if(scope.disbursementDetails != null) {
                         this.formData.disbursementData = [];
@@ -588,6 +640,7 @@
                         location.path('/viewloanaccount/' + data.loanId);
                     });
                 } else {
+                    console.log("else loop" + params);
                     params.loanId = scope.accountId;
                     resourceFactory.LoanAccountResource.save(params, this.formData, function (data) {
 
@@ -687,7 +740,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('LoanAccountActionsController', ['$scope','$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.LoanAccountActionsController]).run(function ($log) {
+    mifosX.ng.application.controller('LoanAccountActionsController', ['$scope','$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', '$http',mifosX.controllers.LoanAccountActionsController]).run(function ($log) {
         $log.info("LoanAccountActionsController initialized");
     });
 }(mifosX.controllers || {}));
