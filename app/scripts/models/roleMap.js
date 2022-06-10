@@ -1,9 +1,7 @@
 (function (module) {
     mifosX.models = _.extend(module, {
         roleMap: {
-            1: "superuser",
-            2: "branchmanager",
-            3: "funder"
+            1: "superuser"
         }
     });
 }(mifosX.models || {}));
