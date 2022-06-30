@@ -23,6 +23,9 @@
                         } else if (scope.charges[i].chargeTimeType.value == 'Weekly Fee') {
                             scope.charges[i].dueDate = new Date(dateFilter(scope.charges[i].dueDate, scope.df));
                         }
+                        else if (scope.charges[i].chargeTimeType.value == 'Overdraft Fee') {
+                            scope.charges[i].dueDate = new Date(dateFilter(scope.charges[i].dueDate, 'dd MMMM YYYY'));
+                        }
                     }
                 }
 
@@ -139,6 +142,7 @@
                 if (scope.charges.length > 0) {
                     for (var i in scope.charges) {
                         if (scope.charges[i].chargeTimeType.value == 'Annual Fee') {
+
                             this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount,
                                 feeOnMonthDay: dateFilter(scope.charges[i].feeOnMonthDay, 'dd MMMM')});
                         } else if (scope.charges[i].chargeTimeType.value == 'Specified due date') {
@@ -150,6 +154,9 @@
                         } else if (scope.charges[i].chargeTimeType.value == 'Monthly Fee') {
                             this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount,
                                 feeOnMonthDay: dateFilter(scope.charges[i].feeOnMonthDay, 'dd MMMM'), feeInterval: scope.charges[i].feeInterval});
+                        }else if (scope.charges[i].chargeTimeType.value == 'Overdraft Fee') {
+                            this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount,
+                                dueDate: dateFilter(scope.charges[i].dueDate, scope.df)});
                         } else {
                             this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount});
                         }

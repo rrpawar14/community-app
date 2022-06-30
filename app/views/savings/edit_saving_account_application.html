@@ -274,6 +274,8 @@
                                ng-model="charge.feeOnMonthDay" is-open="opened" ng-switch-when='Monthly Fee'/>
                         <input id="charges[{{$index}}].dueDate" class="input-medium form-control" type="text" datepicker-pop="dd MMMM yyyy"
                                ng-model="charge.dueDate" is-open="opened" ng-switch-when='Weekly Fee'/>
+                        <input id="charges[{{$index}}].dueDate" class="input-medium form-control" type="text" datepicker-pop="dd MMMM yyyy"
+                               ng-model="charge.dueDate" is-open="opened" ng-switch-when='Overdraft Fee'/>
                     </td>
                     <td ng-switch on="charge.chargeTimeType.value">
                         <input id="charges[{{$index}}].feeInterval" class="input-sm form-control" type="text"

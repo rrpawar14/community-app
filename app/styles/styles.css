@@ -8983,7 +8983,6 @@ input[type="submit"] {
 button[disabled],
 html input[disabled] {
   cursor: default;
-  opacity: 50%;
 }
 
 /* line 311, ../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_normalize.scss */
@@ -12294,9 +12293,6 @@ th {
   line-height: 1.42857;
   vertical-align: top;
   border-top: 1px solid #ddd;
-  /*Issue - #3002 */
-  word-break: break-all;
-  max-width: 100px;
 }
 /* line 41, ../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_tables.scss */
 .table > thead > tr > th {
@@ -20081,16 +20077,6 @@ button.close {
   content: "";
 }
 
-/* line 1, ../bower_components/angular-bootstrap/table.css */
-.table > tfoot > tr > td {
-  padding: 8px;
-  line-height: 1.42857;
-  vertical-align: top;
-  border-top: 1px solid #ddd;
-  max-width: 150px          !important;
-  word-break: break-all     !important;
-}
-
 /* Load style components */
 /* @import this file */
 /* line 3, ../styles-dev/main/components/_alerts.scss */
@@ -21199,6 +21185,16 @@ div.chosen-container.chosen-container-single {
   padding: 8px 5px;
 }
 
+/* line 76, ../styles-dev/main/components/_notifications.scss */
+.new-notification {
+  font-weight: bold;
+  border-left: #4f99ed solid 2px;
+}
+/* line 80, ../styles-dev/main/components/_notifications.scss */
+.new-notification h4 {
+  font-weight: bold;
+}
+
 /* line 1, ../styles-dev/main/components/_report.scss */
 .graybg {
   background-color: #f0f0f0;
@@ -21351,12 +21347,7 @@ div.chosen-container.chosen-container-single {
   padding-left: 30px;
 }
 
-.paddedleft52px {
-  padding-left: 52px; 
-}
-
 /* line 108, ../styles-dev/main/components/_report.scss */
-
 .paddedleft80 {
   padding-left: 8%;
 }

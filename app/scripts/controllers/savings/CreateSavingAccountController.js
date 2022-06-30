@@ -228,6 +228,9 @@
                         } else if (scope.charges[i].chargeTimeType.value == 'Weekly Fee') {
                             this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount, dueDate: dateFilter(scope.charges[i].dueDate, scope.df), feeInterval: scope.charges[i].feeInterval});                            
                         }
+                        else if (scope.charges[i].chargeTimeType.value == 'Overdraft Fee') {
+                            this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount, dueDate: dateFilter(scope.charges[i].dueDate, scope.df)});
+                        }
                         else {
                             this.formData.charges.push({ chargeId: scope.charges[i].chargeId, amount: scope.charges[i].amount});
                         }
