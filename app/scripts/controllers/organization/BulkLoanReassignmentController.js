@@ -51,6 +51,26 @@
                 });
 
             };
+
+            var jobIdArray = [];
+            scope.selectAllOptions = function(selectAll){
+                if(selectAll === true) {
+                    for (var i = 0; i < scope.clients.length; i++) {
+                        for(var j = 0; j < scope.clients[i].loans.length; j++) {
+                            jobIdArray.push(scope.clients[i].loans[j].id);
+                            scope.accounts[scope.clients[i].loans[j].id] = true;
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < scope.clients.length; i++) {
+                        for(var j = 0; j < scope.clients[i].loans.length; j++) {
+                            jobIdArray = _.without(jobIdArray, scope.clients[i].loans[j].id);
+                            scope.accounts[scope.clients[i].loans[j].id] = false;
+                        }
+                    }
+                }
+                jobIdArray =  _.uniq(jobIdArray);
+            };
         }
     });
     mifosX.ng.application.controller('BulkLoanReassignmentController', ['$scope', 'ResourceFactory', '$route', 'dateFilter', mifosX.controllers.BulkLoanReassignmentController]).run(function ($log) {

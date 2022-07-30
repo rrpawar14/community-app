@@ -62,6 +62,7 @@
                         <table>
                             <thead>
                             <th>{{'label.heading.clients' | translate}}</th>
+							 <th><input type="checkbox" ng-model="activeall" ng-change="selectAllOptions(activeall)"/></th>
                             </thead>
                             <tbody>
                             <tr ng-repeat="client in clients">
